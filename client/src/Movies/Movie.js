@@ -1,48 +1,47 @@
-import React from "react";
-import axios from "axios";
-import MovieCard from "./MovieCard";
-export default class Movie extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movie: null
-    };
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import MovieCard from './MovieCard';
+
+const Movie = (props) => {
+  const [movie, setMovie] = useState(null);
+ console.log('Movies', props.match.params.id);
+ 
+ const id = props.match.params.id;
+    // change ^^^ that line and grab the id from the URL
+    // You will NEED to add a dependency array to this effect hook
+ 
+ useEffect(() => {
+    
+
+       axios
+        .get(`http://localhost:5000/api/movies/${id}`)
+        .then(response => {
+          setMovie(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+  },[id]);
+  
+  // Uncomment this only when you have moved on to the stretch goals
+  const saveMovie = () => {
+    console.log('saveMovieProps', props);
+    const addToSavedList = props.addToSavedList;
+    addToSavedList(movie)
   }
 
-  componentDidMount() {
-    this.fetchMovie(this.props.match.params.id);
+  if (!movie) {
+    return <div>Loading movie information...</div>;
   }
 
-  componentWillReceiveProps(newProps) {
-    if (this.props.match.params.id !== newProps.match.params.id) {
-      this.fetchMovie(newProps.match.params.id);
-    }
-  }
-
-  fetchMovie = id => {
-    axios
-      .get(`http://localhost:5000/api/movies/${id}`)
-      .then(res => this.setState({ movie: res.data }))
-      .catch(err => console.log(err.response));
-  };
-
-  saveMovie = () => {
-    const addToSavedList = this.props.addToSavedList;
-    addToSavedList(this.state.movie);
-  };
-
-  render() {
-    if (!this.state.movie) {
-      return <div>Loading movie information...</div>;
-    }
-
-    return (
-      <div className="save-wrapper">
-        <MovieCard movie={this.state.movie} />
-        <div className="save-button" onClick={this.saveMovie}>
-          Save
-        </div>
-      </div>
-    );
-  }
+  
+  return (
+    <div className="save-wrapper">
+      <MovieCard movie={movie}/>
+      <div onClick={saveMovie} className="save-button">Save</div>
+    </div>
+  );
 }
+
+export default Movie;
