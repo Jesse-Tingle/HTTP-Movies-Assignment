@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MovieCard from './MovieCard';
 import api from '../utils/api';
+import UpdateMovie from './UpdateMovie';
 
 const Movie = (props) => {
   const [movie, setMovie] = useState(null);
@@ -32,11 +33,11 @@ const Movie = (props) => {
   if (!movie) {
     return <div>Loading movie information...</div>;
   }
-
   
   return (
     <div className="save-wrapper">
       <MovieCard movie={movie}/>
+      <button onClick={UpdateMovie} className="edit-button">Edit</button>
       <div onClick={saveMovie} className="save-button">Save</div>
     </div>
   );
