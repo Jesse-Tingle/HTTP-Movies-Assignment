@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { Link } from 'react-router-dom';
 
 import MovieCard from './MovieCard';
+import api from '../utils/api';
 
 const MovieList = props => {
   const [movies, setMovies] = useState([])
   useEffect(() => {
     const getMovies = () => {
-      axios
-        .get('http://localhost:5000/api/movies')
+      api()
+        .get('/api/movies')
         .then(response => {
           setMovies(response.data);
         })
