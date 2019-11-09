@@ -25,6 +25,7 @@ const App = () => {
       <Route exact path="/" exact component={MovieList} />
       <Route exact path="/movies/:id" render={(props) => <Movie {...props} addToSavedList={addToSavedList}/>} />
       <Route exact path="/api/movies/:id" component={UpdateMovie} />
+      
     </div>
   );
 };

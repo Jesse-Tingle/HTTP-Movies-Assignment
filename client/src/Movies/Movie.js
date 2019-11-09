@@ -6,6 +6,7 @@ import api from '../utils/api';
 import { Link } from 'react-router-dom';
 
 const Movie = (props) => {
+  console.log('movie.js props', props)
   const [movie, setMovie] = useState(null);
  console.log('Movies', props.match.params.id);
  
@@ -17,6 +18,7 @@ const Movie = (props) => {
        api()
         .get(`/api/movies/${id}`)
         .then(response => {
+          console.log('Movie.js response.data', response.data)
           setMovie(response.data);
         })
         .catch(error => {
@@ -36,11 +38,33 @@ const Movie = (props) => {
     return <div>Loading movie information...</div>;
   }
   
+  
+
+  const handleDelete = (e, id) => {
+
+
+    if (window.confirm('Are you sure you want to delete this movie?'))
+    
+    api()
+      .delete(`api/movies/${id}`)
+      .then(res => {
+        console.log('Movie was deleted!') 
+        console.log('delete movie', props)
+
+        props.history.push('/');     
+      })
+      .catch(err => {
+        console.log(err, err.response)
+      })
+  }
+
+
   return (
     <div className="save-wrapper">
-      <MovieCard movie={movie}/>
+      <MovieCard movie={movie} {...props} />
       <Link to={`/api/movies/${id}`} className="edit-button">Edit</Link>
       <div onClick={saveMovie} className="save-button">Save</div>
+      <button className="delete-button" onClick={(e) => handleDelete(e, movie.id)}>Delete</button>
     </div>
   );
 }
