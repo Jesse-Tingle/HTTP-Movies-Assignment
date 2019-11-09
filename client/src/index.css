@@ -75,6 +75,11 @@ body {
   background-color: #9E9E9E;
 }
 
+.edit-button:hover {
+  background-color: #484848;
+  color: white;
+}
+
 .home-button {
   padding: 5px 10px;
   background-color: lightskyblue;
