@@ -80,14 +80,14 @@ body {
   color: white;
 }
 
-/* .delete-button {
+.delete-button {
   position: absolute;
-  top: 150px;
-  right: 25px;
+  top: 70px;
+  right: 60px;
   border: 1px solid grey;
   padding: 5px 10px;
-  background-color: #ff5f5f
-} */
+  background-color: #F44336;
+}
 
 .home-button {
   padding: 5px 10px;
