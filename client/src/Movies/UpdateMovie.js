@@ -35,22 +35,23 @@ export default function UpdateMovie(props) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        let updatedMovie = {}
+        
+        if(typeof(movie.stars)==='object'){
+            updatedMovie = movie
+        } else {
+            updatedMovie = {...movie, stars: movie.stars.split(",")}
+        }
+        
+
         api()
-            .put(`/api/movies/${id}`, movie)
+            .put(`/api/movies/${id}`, updatedMovie)
             .then(res => {
                 props.history.push('/')
             })
             .catch(err => {
                 console.log("handle Submit err", err)
             })
-
-    }
-
-    const handleStars = (e) => {
-        setMovie({
-            ...movie,
-            stars: [e.target.value]
-        })
     }
 
     return (
@@ -58,7 +59,7 @@ export default function UpdateMovie(props) {
             <input type="text" name="title" placeholder="Title" value={movie.title} onChange={handleChange} />
             <input type="text" name="director" placeholder="Director" value={movie.director} onChange={handleChange} />
             <input type="text" name="metascore" placeholder="Metascore" value={movie.metascore} onChange={handleChange}/>
-            <input type="text" name="stars" placeholder="Stars" value={movie.stars} onChange={(e) => handleStars(e, movie)} />
+            <input type="text" name="stars" placeholder="Stars" value={movie.stars} onChange={handleChange} />
             <button type="submit">Save</button>
         </form>
     )
