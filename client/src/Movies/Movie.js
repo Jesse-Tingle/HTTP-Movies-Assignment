@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MovieCard from './MovieCard';
 import api from '../utils/api';
-import UpdateMovie from './UpdateMovie';
+// import UpdateMovie from './UpdateMovie';
+
+import { Link } from 'react-router-dom';
 
 const Movie = (props) => {
   const [movie, setMovie] = useState(null);
@@ -37,7 +39,7 @@ const Movie = (props) => {
   return (
     <div className="save-wrapper">
       <MovieCard movie={movie}/>
-      <button onClick={UpdateMovie} className="edit-button">Edit</button>
+      <Link to={`/api/movies/${id}`} className="edit-button">Edit</Link>
       <div onClick={saveMovie} className="save-button">Save</div>
     </div>
   );
